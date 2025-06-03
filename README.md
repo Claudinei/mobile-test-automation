@@ -3,4 +3,7 @@
 - TO-DO
 - iOS
 - Android
-- Teste
+
+### Para rodar 
+- mvn clean test
+- allure serve allure-results
