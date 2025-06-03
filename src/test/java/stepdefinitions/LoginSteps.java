@@ -1,48 +1,35 @@
 package stepdefinitions;
 
-import drivers.DriverFactory;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.ios.IOSDriver;
+import core.DriverFactory;
+import io.appium.java_client.AppiumDriver;
 import io.cucumber.java.en.*;
+import io.cucumber.java.After;
 import pages.LoginPage;
-import pages.android.LoginPageAndroid;
-import pages.ios.LoginPageIOS;
 
 public class LoginSteps {
+    private AppiumDriver driver;
     private LoginPage login;
 
-    private void initLoginPage() {
-        if (login == null) {
-            String platform = DriverFactory.getPlatform();
-            if ("ios".equalsIgnoreCase(platform)) {
-                login = new LoginPageIOS((IOSDriver) DriverFactory.getDriver());
-            } else {
-                login = new LoginPageAndroid((AndroidDriver) DriverFactory.getDriver());
-            }
-        }
+    @Given("the app is launched")
+    public void launchApp() throws Exception {
+        driver = DriverFactory.getDriver();
+        //login = new LoginPage(driver);
     }
 
-    @Given("o usuário está na tela de login")
-    public void naTelaLogin() {
-        initLoginPage();
-    }
-
-    @When("ele insere usuário {string} e senha {string}")
-    public void inserirCredenciais(String usuario, String senha) {
-        initLoginPage();
-        login.enterUsername(usuario);
-        login.enterPassword(senha);
-    }
-
-    @And("toca no botão de login")
-    public void tocarBotaoLogin() {
-        initLoginPage();
+    @When("I enter valid credentials")
+    public void enterValidCredentials() {
+        login.enterUsername("user");
+        login.enterPassword("1234");
         login.tapLogin();
     }
 
-    @Then("ele deve ver a tela inicial")
-    public void validarTelaInicial() {
-        initLoginPage();
-        // Validação futura
+    @Then("I should be logged in")
+    public void verifyLogin() {
+        // Implementar validações conforme aplicação
+    }
+
+    @After
+    public void tearDown() {
+        DriverFactory.quitDriver();
     }
 }
