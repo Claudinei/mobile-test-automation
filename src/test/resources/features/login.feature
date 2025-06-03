@@ -1,5 +1,6 @@
 Feature: Login
 
+  @loginAndroid
   Scenario: Login com sucesso
     Given o usuário está na tela de login
     When ele insere usuário "admin" e senha "1234"

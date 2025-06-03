@@ -14,70 +14,102 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>11</maven.compiler.source>  <!-- Ajuste para Java 11 ou superior -->
+    <maven.compiler.target>11</maven.compiler.target>
+    <cucumber.version>7.22.2</cucumber.version>
+    <appium.version>9.0.0</appium.version>
+    <allure.version>2.29.1</allure.version>
+    <junit.jupiter.version>5.13.0</junit.jupiter.version>
   </properties>
 
   <dependencies>
-    <!-- Cucumber -->
-    <dependency>
-      <groupId>io.cucumber</groupId>
-      <artifactId>cucumber-java</artifactId>
-      <version>7.14.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>io.cucumber</groupId>
-      <artifactId>cucumber-junit</artifactId>
-      <version>7.14.0</version>
-    </dependency>
-
-    <!-- Appium -->
+    <!-- Appium Java Client -->
     <dependency>
       <groupId>io.appium</groupId>
       <artifactId>java-client</artifactId>
-      <version>9.4.0</version>
+      <version>${appium.version}</version>
     </dependency>
 
-    <!-- WebDriverManager (caso use navegadores como Chrome/Firefox) -->
+    <!-- Cucumber Java -->
     <dependency>
-      <groupId>io.github.bonigarcia</groupId>
-      <artifactId>webdrivermanager</artifactId>
-      <version>5.7.0</version>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>${cucumber.version}</version>
     </dependency>
 
-    <!-- Allure -->
+    <!-- Cucumber JUnit -->
     <dependency>
-      <groupId>io.qameta.allure</groupId>
-      <artifactId>allure-cucumber7-jvm</artifactId>
-      <version>2.24.0</version>
-    </dependency>
-
-    <!-- JUnit 5 (compatível com Cucumber 7) -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>5.9.2</version>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit</artifactId>
+      <version>${cucumber.version}</version>
       <scope>test</scope>
     </dependency>
 
-    <!-- Gson atualizado -->
+    <!-- JUnit Jupiter API e Engine (JUnit 5) -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Allure Cucumber7 JVM -->
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-cucumber7-jvm</artifactId>
+      <version>${allure.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Gson -->
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
-      <version>2.10.1</version>
+      <version>2.13.1</version>
     </dependency>
-
   </dependencies>
 
   <build>
     <plugins>
-      <!-- Cucumber -->
+      <!-- Maven Compiler Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+        </configuration>
+      </plugin>
+
+      <!-- Maven Surefire Plugin para executar testes -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.1.2</version>
+        <configuration>
+          <includes>
+            <include>**/*Test.java</include>
+            <include>**/*Tests.java</include>
+            <include>**/*TestCase.java</include>
+          </includes>
+          <!-- Para rodar JUnit 5 -->
+          <properties>
+            <property>
+              <name>junit.platform.version</name>
+              <value>${junit.jupiter.version}</value>
+            </property>
+          </properties>
+        </configuration>
       </plugin>
 
-      <!-- Allure -->
+      <!-- Allure Maven Plugin -->
       <plugin>
         <groupId>io.qameta.allure</groupId>
         <artifactId>allure-maven</artifactId>

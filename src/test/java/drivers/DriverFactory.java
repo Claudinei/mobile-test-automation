@@ -8,30 +8,42 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class DriverFactory {
     private static AppiumDriver driver;
 
     public static void initialize() {
         if (driver != null) {
-            return; // Evita reinicializações desnecessárias
+            return;
         }
 
         try {
             DesiredCapabilities caps = new DesiredCapabilities();
+
+            // Pega caminho relativo do app do config.properties
+            String appRelativePath = ConfigManager.get("app");
+            // Monta caminho absoluto baseado no diretório do projeto
+            Path appPath = Paths.get(System.getProperty("user.dir"), appRelativePath);
+
             caps.setCapability("deviceName", ConfigManager.get("deviceName"));
-            caps.setCapability("platformVersion", ConfigManager.get("platformVersion"));
-            caps.setCapability("app", ConfigManager.get("app"));
+            caps.setCapability("app", appPath.toString());
 
             final String platform = ConfigManager.get("platform");
+
             if ("android".equalsIgnoreCase(platform)) {
                 caps.setCapability("platformName", "Android");
-                caps.setCapability("appPackage", ConfigManager.get("appPackage"));
-                caps.setCapability("appActivity", ConfigManager.get("appActivity"));
-                driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), caps);
+                caps.setCapability("automationName", "UiAutomator2");
+                caps.setCapability("noReset", true);
+                driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), caps);
+
             } else if ("ios".equalsIgnoreCase(platform)) {
                 caps.setCapability("platformName", "iOS");
-                driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), caps);
+                caps.setCapability("automationName", "XCUITest");
+                caps.setCapability("bundleId", ConfigManager.get("bundleId"));
+                driver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), caps);
+
             } else {
                 throw new IllegalArgumentException("Plataforma desconhecida: " + platform);
             }
