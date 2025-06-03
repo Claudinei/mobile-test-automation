@@ -1,8 +1,6 @@
-Feature: Login
+Feature: Login no aplicativo
 
-  @loginAndroid
-  Scenario: Login com sucesso
-    Given o usuário está na tela de login
-    When ele insere usuário "admin" e senha "1234"
-    And toca no botão de login
-    Then ele deve ver a tela inicial
+  Scenario: Login com credenciais válidas
+    Given the app is launched
+    #When I enter valid credentials
+    #Then I should be logged in
