@@ -1,6 +1,6 @@
 Feature: Login no aplicativo
 
   Scenario: Login com credenciais válidas
-    Given the app is launched
-    #When I enter valid credentials
+    Given que o aplicativo é iniciado
+    #When Eu insiro credenciais válidas
     #Then I should be logged in

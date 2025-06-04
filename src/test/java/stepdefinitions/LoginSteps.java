@@ -10,21 +10,21 @@ public class LoginSteps {
     private AppiumDriver driver;
     private LoginPage login;
 
-    @Given("the app is launched")
+    @Given("que o aplicativo é iniciado")
     public void launchApp() throws Exception {
         driver = DriverFactory.getDriver();
         //login = new LoginPage(driver);
     }
 
-    @When("I enter valid credentials")
-    public void enterValidCredentials() {
-        login.enterUsername("user");
-        login.enterPassword("1234");
+    @When("Eu insiro credenciais válidas")
+    public void insirirCredenciaisValidas() {
+        login.inserirUsuario("user");
+        login.inserirSenha("1234");
         login.tapLogin();
     }
 
-    @Then("I should be logged in")
-    public void verifyLogin() {
+    @Then("Eu deveria estar logado")
+    public void verificarLogin() {
         // Implementar validações conforme aplicação
     }
 
