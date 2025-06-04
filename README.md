@@ -3,6 +3,8 @@
 - TO-DO
 - iOS
 - Android
+- Gerar relatório
+- Tirar print da tela
 
 ### Para rodar 
 - mvn clean test
