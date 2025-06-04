@@ -2,11 +2,11 @@ package pages;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 public class LoginPage {
     private AppiumDriver driver;
 
+    // TO-DO implementar login
     private By usernameField = By.id("com.exemplo:id/username");
     private By passwordField = By.id("com.exemplo:id/password");
     private By loginButton = By.id("com.exemplo:id/login");
@@ -15,11 +15,11 @@ public class LoginPage {
         this.driver = driver;
     }
 
-    public void enterUsername(String user) {
+    public void inserirUsuario(String user) {
         driver.findElement(usernameField).sendKeys(user);
     }
 
-    public void enterPassword(String pass) {
+    public void inserirSenha(String pass) {
         driver.findElement(passwordField).sendKeys(pass);
     }
 
