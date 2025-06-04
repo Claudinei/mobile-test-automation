@@ -21,10 +21,12 @@ public class DriverFactory {
             DesiredCapabilities caps = new DesiredCapabilities();
             caps.setCapability("deviceName", props.getProperty("deviceName"));
             caps.setCapability("platformVersion", props.getProperty("platformVersion"));
-            //caps.setCapability("app", props.getProperty("appPath"));
+
             caps.setCapability("app", absoluteAppPath);
             caps.setCapability("platformName", props.getProperty("platform"));
             caps.setCapability("automationName", "UiAutomator2");
+            caps.setCapability("appPackage",props.getProperty("appPackage") );
+            caps.setCapability("appActivity", props.getProperty("appActivity"));
             caps.setCapability("uiautomator2ServerInstallTimeout", 60000);
 
             URL appiumServerUrl = new URL(props.getProperty("appiumServer"));
